@@ -8,7 +8,6 @@ import {
 } from "@/hooks/queries/notes";
 import NoteCreateContainer from "@/app/(protected)/notes/_components/NoteCreateContainer";
 import { renderWithQueryClient } from "tests/test-utils";
-import { draftNoteStorage } from "@/app/(protected)/notes/_utils/draft-note";
 
 const replaceMock = jest.fn();
 
@@ -175,6 +174,16 @@ describe("NoteCreateContainer", () => {
   });
 
   describe("노트 등록 기능", () => {
+    const mockNoteContent = JSON.stringify({
+      type: "doc",
+      content: [
+        {
+          type: "paragraph",
+          content: [{ type: "text", text: "첫 번째 노트 내용" }],
+        },
+      ],
+    });
+
     it("등록 성공 시 toast 메시지가 표시된다", () => {
       const { mockCreateNoteMutation } = setup();
 
@@ -183,16 +192,6 @@ describe("NoteCreateContainer", () => {
           id: 1,
           ...data,
         });
-      });
-
-      const mockNoteContent = JSON.stringify({
-        type: "doc",
-        content: [
-          {
-            type: "paragraph",
-            content: [{ type: "text", text: "첫 번째 노트 내용" }],
-          },
-        ],
       });
 
       mockCreateNoteMutation(
@@ -215,16 +214,6 @@ describe("NoteCreateContainer", () => {
 
       mockCreateNoteMutation.mockImplementation((data, { onError }) => {
         onError(new Error("Network error"));
-      });
-
-      const mockNoteContent = JSON.stringify({
-        type: "doc",
-        content: [
-          {
-            type: "paragraph",
-            content: [{ type: "text", text: "첫 번째 노트 내용" }],
-          },
-        ],
       });
 
       mockCreateNoteMutation(
