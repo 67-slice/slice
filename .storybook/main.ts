@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { mergeConfig } from "vite";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const ALIAS_PATH = path.resolve(__dirname, "../src");
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -23,7 +24,7 @@ const config: StorybookConfig = {
     return mergeConfig(baseConfig, {
       resolve: {
         alias: {
-          "@": path.resolve(__dirname, "../src"),
+          "@": ALIAS_PATH,
         },
       },
     });
