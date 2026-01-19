@@ -1,5 +1,5 @@
-import { LoginFormValues } from "../../../../src/types/authForm";
-import { validateLogin } from "../../../../src/utils/validation/forms/validateLogin";
+import { LoginFormValues } from "@/types/authForm";
+import { validateLogin } from "@/utils/validation/forms/validateLogin";
 
 const createValues = (
   override: Partial<LoginFormValues> = {},

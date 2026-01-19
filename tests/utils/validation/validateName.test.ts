@@ -1,4 +1,4 @@
-import { validateName } from "../../../../src/utils/validation/fields/validateName";
+import { validateName } from "@/utils/validation/fields/validateName";
 
 describe("이름 유효성 검사", () => {
   it("비어 있으면 에러 메시지를 반환한다", () => {
