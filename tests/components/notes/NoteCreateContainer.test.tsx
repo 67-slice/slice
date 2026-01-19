@@ -8,6 +8,7 @@ import {
 } from "@/hooks/queries/notes";
 import NoteCreateContainer from "@/app/(protected)/notes/_components/NoteCreateContainer";
 import { renderWithQueryClient } from "tests/test-utils";
+import { localStorageMock } from "tests/mocks/localStorageMock";
 
 const replaceMock = jest.fn();
 
@@ -18,22 +19,6 @@ jest.mock("next/navigation", () => ({
 jest.mock("@/lib/toast");
 jest.mock("@/hooks/queries/todos");
 jest.mock("@/hooks/queries/notes");
-
-const localStorageMock = (() => {
-  let store: Record<string, string> = {};
-  return {
-    getItem: (key: string) => store[key] || null,
-    setItem: (key: string, value: string) => {
-      store[key] = value;
-    },
-    removeItem: (key: string) => {
-      delete store[key];
-    },
-    clear: () => {
-      store = {};
-    },
-  };
-})();
 
 Object.defineProperty(window, "localStorage", {
   value: localStorageMock,
