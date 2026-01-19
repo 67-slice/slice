@@ -99,7 +99,7 @@ describe("NoteCreateContainer", () => {
       expect(titleInput).toHaveValue("첫 번째 노트");
     });
 
-    it("링크 버튼 클릭 시 메타데이터 fetch가 호출된다", async () => {
+    it("링크 입력 시 입력한 URL로 메타데이터 fetch가 호출된다", async () => {
       const user = userEvent.setup();
       const { mockLinkMetadataMutation } = setup();
 
