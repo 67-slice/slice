@@ -7,6 +7,7 @@ import { deleteGoal } from "@/api/goal";
 import goalsQueryKeys from "./queryKeys";
 import { useRouter } from "next/navigation";
 import { Goal, GoalResponse } from "@/api/types/goal";
+import { toast } from "sonner";
 
 type GoalsCache =
   | { nextCursor: number | null; totalCount: number; goals: Goal[] }
@@ -23,39 +24,10 @@ export function useDeleteGoalMutation() {
       await queryClient.cancelQueries({
         queryKey: goalsQueryKeys.detail(goalId),
       });
-      await queryClient.cancelQueries({
-        queryKey: goalsQueryKeys.list(),
-      });
+
       await queryClient.cancelQueries({
         queryKey: goalsQueryKeys.infinite(),
       });
-
-      queryClient.setQueriesData<GoalsCache>(
-        { queryKey: goalsQueryKeys.list() },
-        (old) => {
-          if (!old?.goals) return old;
-          return {
-            ...old,
-            totalCount: old.totalCount - 1,
-            goals: old.goals.filter((goal) => goal.id !== goalId),
-          };
-        },
-      );
-
-      queryClient.setQueriesData<InfiniteData<GoalResponse>>(
-        { queryKey: goalsQueryKeys.infinite() },
-        (old) => {
-          if (!old?.pages) return old;
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              totalCount: page.totalCount - 1,
-              goals: page.goals.filter((goal) => goal.id !== goalId),
-            })),
-          };
-        },
-      );
 
       queryClient.removeQueries({
         queryKey: goalsQueryKeys.detail(goalId),
@@ -63,23 +35,16 @@ export function useDeleteGoalMutation() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: goalsQueryKeys.list(),
-      });
-      queryClient.invalidateQueries({
-        queryKey: goalsQueryKeys.infinite(),
-      });
-
       router.replace("/dashboard");
     },
 
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: goalsQueryKeys.list() });
+      queryClient.invalidateQueries({ queryKey: goalsQueryKeys.infinite() });
+    },
+
     onError: () => {
-      queryClient.invalidateQueries({
-        queryKey: goalsQueryKeys.list(),
-      });
-      queryClient.invalidateQueries({
-        queryKey: goalsQueryKeys.infinite(),
-      });
+      toast.error("삭제에 실패했습니다.");
     },
   });
 }
