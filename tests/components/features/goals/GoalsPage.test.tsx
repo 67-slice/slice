@@ -3,13 +3,15 @@ import GoalHeader from "@/app/(protected)/goals/[goalId]/_components/GoalHeader"
 import GoalSection from "@/app/(protected)/goals/[goalId]/_components/GoalSection";
 import { calcProgress } from "@/app/(protected)/goals/[goalId]/_utils/calcProgress";
 import { EMPTY_MESSAGES } from "@/constants/messages";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithQueryClient } from "tests/test-utils";
 
 const push = jest.fn();
+const replace = jest.fn();
+
 jest.mock("next/navigation", () => ({
-  useRouter: () => ({ push }),
+  useRouter: () => ({ push, replace }),
   useParams: () => ({ goalId: "1" }),
 }));
 
@@ -97,6 +99,10 @@ describe("목표 영역", () => {
       expect(screen.getByText("정말 삭제하시겠어요?")).toBeInTheDocument();
 
       await user.click(screen.getByText("확인"));
+      expect(replace).toHaveBeenCalledWith(
+        expect.stringContaining("dashboard"),
+      );
+
       expect(deleteGoal).toHaveBeenCalled();
     });
   });

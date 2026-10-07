@@ -15,7 +15,7 @@ export function useLogout() {
       await logout();
     } finally {
       clearUser();
-      queryClient.removeQueries({ queryKey: authQueryKeys.all });
+      queryClient.clear;
       router.replace("/login");
     }
   };

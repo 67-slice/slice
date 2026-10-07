@@ -33,7 +33,7 @@ export default function NoteDetailModal({ children }: NoteDetailModalProps) {
 
   return (
     <>
-      <ModalBackground />
+      <ModalBackground onClick={handleClose} />
       <div
         className={clsx(
           "fixed inset-y-0 right-0 left-0 z-1000 bg-white px-4 pt-12 pb-4",

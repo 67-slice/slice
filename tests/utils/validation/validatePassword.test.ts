@@ -1,4 +1,4 @@
-import { validatePassword } from "../../../../src/utils/validation/fields/validatePassword";
+import { validatePassword } from "../../../src/utils/validation/fields/validatePassword";
 
 describe("비밀번호 유효성 검사", () => {
   it("비어 있으면 에러 메시지를 반환한다", () => {

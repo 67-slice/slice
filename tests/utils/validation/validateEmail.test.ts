@@ -1,4 +1,4 @@
-import { validateEmail } from "../../../../src/utils/validation/fields/validateEmail";
+import { validateEmail } from "@/utils/validation/fields/validateEmail";
 
 describe("이메일 유효성 검사", () => {
   it("이메일이 비어 있으면 에러 메시지를 반환한다", () => {
