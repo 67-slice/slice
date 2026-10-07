@@ -57,7 +57,7 @@ export default function ListItemActions({
           router.push(`/notes/${noteId}/edit`);
           return;
         }
-        window.location.href = `/notes/new?todoId=${id}`;
+        router.push(`/notes/new/${id}`);
         closeDropdown();
       },
     },
