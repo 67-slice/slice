@@ -11,11 +11,11 @@ import { AsyncBoundary } from "@/app/(protected)/_components/AsyncBoundary";
 import NoteCreateContainer from "@/app/(protected)/notes/_components/NoteCreateContainer";
 
 interface NoteNewPageProps {
-  searchParams: Promise<{ todoId: string }>;
+  params: Promise<{ todoId: string }>;
 }
 
-export default async function NoteNewPage({ searchParams }: NoteNewPageProps) {
-  const { todoId } = await searchParams;
+export default async function NoteNewPage({ params }: NoteNewPageProps) {
+  const { todoId } = await params;
   const todoIdNumber = Number(todoId);
 
   const queryClient = new QueryClient();
